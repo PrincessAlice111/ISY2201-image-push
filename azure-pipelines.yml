@@ -1,0 +1,20 @@
+trigger:
+  - main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  # Task variables.
+  serviceConnectionName: 'ContainerRegistryConnection'
+  containerRegistryName: 'DevOpsGrupo12'
+  imageName: 'nginx'
+
+steps:
+  - task: Docker@2
+    inputs:
+      containerRegistry: '$(serviceConnectionName)'
+      repository: '$(containerRegistryName).azurecr.io/$(imageName)'
+      command: 'buildAndPush'
+      Dockerfile: '**/Dockerfile'
+      tags: 'latest'
